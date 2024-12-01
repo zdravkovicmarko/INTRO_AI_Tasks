@@ -2,6 +2,7 @@ import random
 import heapq
 import time
 
+
 class PuzzleSolver:
     def __init__(self):
         pass  # No need for initialization of goal state anymore.
@@ -97,11 +98,13 @@ class PuzzleSolver:
 
         return successors
 
-    def solve(self, initial_state):
+    is_printed = bool
+
+    def solve(self, initial_state, heuristic, is_printed):
         """
         Function:
-        - Runs A* algorithm solving the puzzle.
-        Input: initial state, goal state.
+        - Runs A* algorithm solving the puzzle using the provided heuristic.
+        Input: initial state, heuristic function, is_printed (boolean flag to print solution or not).
         Output: List of states representing the solution path and statistics.
         """
         start_time = time.time()
@@ -125,44 +128,38 @@ class PuzzleSolver:
 
             # Calculate g(n), h(n), and f(n)
             g_n = len(path) - 1  # g(n) is the number of moves from the start (cost so far)
-            h_n = self.calculateManhattanDistance(current_state)  # h(n) is the Manhattan distance to goal
+            h_n = heuristic(current_state)  # h(n) is the heuristic value (either Hamming or Manhattan)
             f_n = g_n + h_n  # f(n) = g(n) + h(n)
 
-            # If we have found the goal state, print the solution path and stats
+            # If we have found the goal state, print the solution path and stats if is_printed is True
             if current_state == goal:
                 end_time = time.time()
-                print(f"Nodes expanded: {nodes_expanded}")
-                print(f"Time taken: {end_time - start_time:.4f} seconds")
-                print(f"Solution Path:")
+                self.execution_time = end_time - start_time  # Save the execution time
+                if is_printed:
+                    # Print nodes expanded and execution time
+                    print(f"Nodes expanded: {nodes_expanded}")
+                    print(f"Time taken: {self.execution_time:.4f} seconds")
+                    print(f"Solution Path:")
 
-                # Now, print g(n), h(n), and f(n) for each step in the solution path
-                for step, state in enumerate(path):
-                    g_n = step  # g(n) = step number in the path
-                    h_n = self.calculateManhattanDistance(state)  # h(n) is Manhattan distance to goal
-                    f_n = g_n + h_n  # f(n) = g(n) + h(n)
+                    # Now, print g(n), h(n), and f(n) for each step in the solution path
+                    for step, state in enumerate(path):
+                        g_n = step  # g(n) = step number in the path
+                        h_n = heuristic(state)  # h(n) is the heuristic value for that step
+                        f_n = g_n + h_n  # f(n) = g(n) + h(n)
 
-                    print(f"Step {step}:")
-                    for row in state:
-                        print(row)
-                    print(f"g(n) = {g_n}, h(n) = {h_n}, f(n) = {f_n}\n")
+                        print(f"Step {step}:")
+                        for row in state:
+                            print(row)
+                        print(f"g(n) = {g_n}, h(n) = {h_n}, f(n) = {f_n}\n")
 
-                return path
+                return path, nodes_expanded, self.execution_time  # Return all three values
 
             # Generate successors and add to queue
             for successor in self.generateSuccessors(current_state):
                 if tuple(tuple(row) for row in successor) not in visited:
-                    h_cost = self.calculateManhattanDistance(successor)
+                    h_cost = heuristic(successor)
                     g_cost = len(path)  # Path cost so far
                     f_cost = g_cost + h_cost
                     heapq.heappush(queue, (f_cost, successor, path))
 
-        return None  # No solution found
-
-
-# Example usage
-solver = PuzzleSolver()
-initial = solver.generateRandomState()
-print("Initial State:")
-for row in initial:
-    print(row)
-solution = solver.solve(initial)
+        return None, nodes_expanded, self.execution_time  # No solution found, return other values
