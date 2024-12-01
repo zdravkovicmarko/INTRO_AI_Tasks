@@ -2,6 +2,13 @@ from main import PuzzleSolver
 
 
 def simulate_puzzle():
+    """
+    Function:   > Simulates solving 8-puzzle with both Manhattan & Hamming heuristics.
+                > Generates random solvable initial state & prints state before solving.
+                > Solves puzzle using both heuristics & prints solution path.
+    Input:      None.
+    Output:     Prints initial state, solution path, & stats (nodes expanded, execution time).
+    """
     solver = PuzzleSolver()
     initial = solver.generateRandomState()
 
