@@ -1,6 +1,5 @@
-import time
 import numpy as np
-from main import PuzzleSolver  # Assuming PuzzleSolver is in your main.py
+from main import PuzzleSolver
 
 
 def run_tests():

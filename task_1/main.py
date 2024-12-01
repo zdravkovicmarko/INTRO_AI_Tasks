@@ -5,7 +5,7 @@ import time
 
 class PuzzleSolver:
     def __init__(self):
-        pass  # No need for initialisation of goal state anymore.
+        pass  # No need for initialisation of goal state anymore
 
     def generateRandomState(self):
         """
