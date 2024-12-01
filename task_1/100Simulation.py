@@ -2,7 +2,7 @@ import numpy as np
 from main import PuzzleSolver
 
 
-def run_tests():
+def runTests():
     """
     Function:   > Runs 100 tests of  8-puzzle solver using both Hamming & Manhattan heuristics.
                 > Tracks number of nodes expanded & execution time for each test.
@@ -32,7 +32,7 @@ def run_tests():
         execution_times_manhattan.append(execution_time_manhattan)
 
     # Calculate statistics (mean & standard deviation) for nodes expanded & execution time
-    def calculate_statistics(nodes_expanded, execution_times):
+    def calculateStatistics(nodes_expanded, execution_times):
         """
         Function:   Calculates mean & standard deviation for nodes expanded & execution times.
         Input:      > nodes_expanded: List of number of nodes expanded in each test.
@@ -46,9 +46,9 @@ def run_tests():
         return mean_nodes, std_nodes, mean_time, std_time
 
     # Calculate statistics for Hamming & Manhattan heuristics
-    mean_nodes_hamming, std_nodes_hamming, mean_time_hamming, std_time_hamming = calculate_statistics(
+    mean_nodes_hamming, std_nodes_hamming, mean_time_hamming, std_time_hamming = calculateStatistics(
         nodes_expanded_hamming, execution_times_hamming)
-    mean_nodes_manhattan, std_nodes_manhattan, mean_time_manhattan, std_time_manhattan = calculate_statistics(
+    mean_nodes_manhattan, std_nodes_manhattan, mean_time_manhattan, std_time_manhattan = calculateStatistics(
         nodes_expanded_manhattan, execution_times_manhattan)
 
     # Print results
@@ -70,4 +70,4 @@ def run_tests():
 
 
 if __name__ == "__main__":
-    run_tests() # Run test suite
+    runTests() # Run test suite

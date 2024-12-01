@@ -1,7 +1,7 @@
 from main import PuzzleSolver
 
 
-def simulate_puzzle():
+def simulatePuzzle():
     """
     Function:   > Simulates solving 8-puzzle with both Manhattan & Hamming heuristics.
                 > Generates random solvable initial state & prints state before solving.
@@ -26,4 +26,4 @@ def simulate_puzzle():
 
 
 if __name__ == "__main__":
-    simulate_puzzle()
+    simulatePuzzle()
