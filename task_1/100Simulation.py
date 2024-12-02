@@ -4,7 +4,7 @@ from main import PuzzleSolver
 
 def runTests():
     """
-    Function:   > Runs 100 tests of  8-puzzle solver using both Hamming & Manhattan heuristics.
+    Function:   > Runs 100 tests of 8-puzzle solver using both Hamming & Manhattan heuristics.
                 > Tracks number of nodes expanded & execution time for each test.
     Input:      None.
     Output:     Prints statistical analysis of nodes expanded & execution times for both heuristics.
