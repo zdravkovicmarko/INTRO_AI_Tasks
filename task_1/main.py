@@ -39,8 +39,8 @@ class PuzzleSolver:
         """
         flattened = [num for row in state for num in row if num != 0] # Flatten matrix, excluding 0
         inversions = 0
-        for i in range(len(flattened)):
-            for j in range(i + 1, len(flattened)):
+        for i in range(len(flattened)): # Iterate through flattened list
+            for j in range(i + 1, len(flattened)): # Compare each element with subsequent ones
                 if flattened[i] > flattened[j]:
                     inversions += 1
         return inversions % 2 == 0 # Solvable if even inversion number
@@ -53,9 +53,9 @@ class PuzzleSolver:
         """
         goal = self.goalState() # Retrieve goal state
         distance = 0
-        for i in range(3):
-            for j in range(3):
-                if state[i][j] != 0 and state[i][j] != goal[i][j]: # Compare non-zero tiles
+        for i in range(3): # Loop through rows
+            for j in range(3): # Loop through columns
+                if state[i][j] != 0 and state[i][j] != goal[i][j]: # Check if tile non-zero & misplaced
                     distance += 1
         return distance
 
@@ -67,11 +67,11 @@ class PuzzleSolver:
         """
         goal = self.goalState() # Retrieve goal state
         distance = 0
-        for i in range(3):
-            for j in range(3):
+        for i in range(3): # Loop through rows
+            for j in range(3): # Loop through columns
                 if state[i][j] != 0: # Skip empty tile (0)
-                    value = state[i][j]
-                    goal_x, goal_y = divmod(value - 1, 3) # Tile's goal position
+                    value = state[i][j] # Get current tile value
+                    goal_x, goal_y = divmod(value - 1, 3) # Calculate goal position (tile value, column amount)
                     distance += abs(i - goal_x) + abs(j - goal_y) # Sum of Manhattan distances
         return distance
 
@@ -87,10 +87,10 @@ class PuzzleSolver:
 
         # Generate new states by swapping empty tile with neighbouring tiles
         for dx, dy in moves:
-            new_x, new_y = zero_x + dx, zero_y + dy
+            new_x, new_y = zero_x + dx, zero_y + dy # Calculate new position for empty tile
             if 0 <= new_x < 3 and 0 <= new_y < 3: # Ensure within bounds
                 new_state = [row[:] for row in state] # Make copy of state
-                new_state[zero_x][zero_y], new_state[new_x][new_y] = new_state[new_x][new_y], new_state[zero_x][zero_y]
+                new_state[zero_x][zero_y], new_state[new_x][new_y] = new_state[new_x][new_y], new_state[zero_x][zero_y] # Swap tiles
                 successors.append(new_state)
 
         return successors
@@ -161,6 +161,6 @@ class PuzzleSolver:
                     h_cost = heuristic(successor) # Calculate heuristic for successor
                     g_cost = len(path)  # Path cost so far
                     f_cost = g_cost + h_cost
-                    heapq.heappush(queue, (f_cost, successor, path)) # Add to queue with priority
+                    heapq.heappush(queue, (f_cost, successor, path)) # Add to queue with priority based on f(n)
 
         return None, nodes_expanded, self.execution_time  # No solution found, return other values
